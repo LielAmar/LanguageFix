@@ -12,7 +12,7 @@ This plugin adds support to foreign languages such as Hebrew and Arabic, which a
 <br>unlike most languages, that go left to right.
 
 LanguageFix uses a better algorithm and supports BungeeCord, all within the same plugin.
-<br>to use 2FA for BungeeCord, you need to put the jar file in /plugins/ for your BungeeCord server, and delete it from every Spigot/Paper server.
+<br>to use LanguageFix for BungeeCord, you need to put the jar file in /plugins/ for your BungeeCord server, and delete it from every Spigot/Paper server.
 
 ## Features
 * Permission-Based
