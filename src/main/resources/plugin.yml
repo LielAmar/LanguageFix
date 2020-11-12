@@ -1,5 +1,22 @@
 name: LanguageFix
 author: LielAmar
-version: 1.0
+version: 1.0.1
 description: Fixes RTL issues in Minecraft
 main: com.lielamar.languagefix.bukkit.LanguageFix
+
+permissions:
+  languagefix.*:
+    description: Gives access to all LanguageFix permissions
+    children:
+      languagefix.oncommands: true
+      languagefix.onchat: true
+      languagefix.onsign: true
+  languagefix.oncommands:
+    description: Fixes your RTL Language on commands
+    default: true
+  languagefix.onchat:
+    description: Fixes your RTL Language on chat
+    default: true
+  languagefix.onsign:
+    description: Fixes your RTL Language on sign
+    default: true

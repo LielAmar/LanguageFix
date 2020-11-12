@@ -20,14 +20,16 @@ public class OnCommandProcess implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCommand(ChatEvent event) {
-        if(!event.isCancelled()) return;
+        if(!event.isCommand()) return;
+
+        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
+        if(!player.hasPermission("languagefix.oncommands")) return;
+        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
 
         String message = event.getMessage();
 
         if(!message.contains(" ")) return;
         if(!isFixedCommand(message)) return;
-
-        ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         String fixedCommand = plugin.getFixHandler().fixRTLMessage(event.getMessage());
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(player, event.getMessage(), fixedCommand);

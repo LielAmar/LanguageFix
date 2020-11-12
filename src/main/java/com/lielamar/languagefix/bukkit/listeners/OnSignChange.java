@@ -17,6 +17,7 @@ public class OnSignChange implements Listener {
     @EventHandler
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
+        if(!player.hasPermission("languagefix.onsign")) return;
         if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
 
         String[] fixedLines = new String[event.getLines().length];

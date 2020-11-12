@@ -11,16 +11,26 @@ import java.util.UUID;
 
 public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.PlayerHandler {
 
+    private Method getHandle = null;
+    private Field locale = null;
+    {
+        try {
+            Class<?> craftPlayer = getClass("org.bukkit.craftbukkit", "entity.CraftPlayer");
+            getHandle = craftPlayer.getMethod("getHandle");
+            locale = craftPlayer.getDeclaredField("locale");
+            locale.setAccessible(true);
+        } catch (NoSuchMethodException | NoSuchFieldException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public Language getClientLanguage(UUID uuid) {
         Player player = Bukkit.getPlayer(uuid);
         if(player == null || !player.isOnline()) return null;
 
         try {
-            Method getHandle = getClass("org.bukkit.craftbukkit", "entity.CraftPlayer").getMethod("getHandle");
             Object craftPlayer = getHandle.invoke(player);
-            Field locale = craftPlayer.getClass().getDeclaredField("locale");
-            locale.setAccessible(true);
             String language = (String) locale.get(craftPlayer);
 
             for(Language lang : Language.values()) {
@@ -28,7 +38,7 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
                     return lang;
             }
             return null;
-        } catch (NoSuchMethodException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException e) {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
             e.printStackTrace();
             return null;
         }
