@@ -8,6 +8,16 @@ import java.util.regex.Pattern;
 
 public class FixHandler {
 
+    private Pattern pattern;
+    public FixHandler() {
+        StringBuilder patternBuilder = new StringBuilder();
+        for(Language language : Language.values()) {
+            patternBuilder.append(language.getRegex()).append("|");
+        }
+
+        this.pattern =  Pattern.compile(patternBuilder.substring(0, patternBuilder.length()-1));
+    }
+
     /**
      * Checks if a message contains Bidirectional characters
      *
@@ -17,14 +27,7 @@ public class FixHandler {
     public boolean isRTLMessage(String message) {
         if(message == null) return false;
 
-        StringBuilder patternBuilder = new StringBuilder();
-        for(Language language : Language.values()) {
-            patternBuilder.append(language.getRegex()).append("|");
-        }
-
-        Pattern pattern =  Pattern.compile(patternBuilder.substring(0, patternBuilder.length()-1));
-        Matcher matcher = pattern.matcher(message);
-        return matcher.find();
+        return pattern.matcher(message).find();
     }
 
     /**
