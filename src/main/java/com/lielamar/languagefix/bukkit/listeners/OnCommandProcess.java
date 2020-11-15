@@ -33,7 +33,7 @@ public class OnCommandProcess implements Listener {
         if(!message.contains(" ")) return;
         if(!LanguageFixUtils.isFixedCommand(message, plugin.getConfigHandler().getFixedCommands())) return;
 
-        String fixedCommand = plugin.getFixHandler().fixRTLMessage(event.getMessage());
+        String fixedCommand = plugin.getFixHandler().fixRTLMessage(event.getMessage(), true);
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), event.getMessage(), fixedCommand);
         Bukkit.getPluginManager().callEvent(languageFixEvent);
 

@@ -14,7 +14,7 @@ public class FixHandlerPre1_16 extends FixHandler {
      */
 
     @Override
-    public String fixRTLMessage(String message) {
+    public String fixRTLMessage(String message, boolean isCommand) {
         if(!isRTLMessage(message)) return message;
 
         StringBuilder fixedMessage = new StringBuilder();
@@ -53,7 +53,7 @@ public class FixHandlerPre1_16 extends FixHandler {
                     }
                 }
                 i--;
-                if(!resetInsertionPosition)
+                if(!resetInsertionPosition || isCommand)
                     fixedMessage.append(fixedRTLPart);
                 else {
                     fixedMessage.insert(0, fixedRTLPart);
@@ -70,8 +70,12 @@ public class FixHandlerPre1_16 extends FixHandler {
                     }
                 }
                 i--;
-                fixedMessage.insert(0, fixedLTRPart);
                 resetInsertionPosition = true;
+                if(isCommand)
+                    fixedMessage.append(fixedLTRPart);
+                else
+                    fixedMessage.insert(0, fixedLTRPart);
+                fixedMessage.insert(0, fixedLTRPart);
             }
         }
         return fixedMessage.toString();

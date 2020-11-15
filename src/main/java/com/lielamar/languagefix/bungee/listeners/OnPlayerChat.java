@@ -26,7 +26,7 @@ public class OnPlayerChat implements Listener {
             if(!player.hasPermission("languagefix.onchat")) return;
         }
 
-        String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage());
+        String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage(), false);
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(player, event.getMessage(), fixedMessage);
         ProxyServer.getInstance().getPluginManager().callEvent(languageFixEvent);
 
