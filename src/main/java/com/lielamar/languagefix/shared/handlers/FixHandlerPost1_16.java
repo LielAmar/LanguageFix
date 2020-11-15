@@ -48,13 +48,14 @@ public class FixHandlerPost1_16 extends FixHandler {
                     if(isRTLMessage(words[i]) || isNumber(words[i])) {
                         fixedRTLPart.append(words[i]).append(" ");
                     } else {
+                        i--;
                         break;
                     }
                 }
-                i--;
-                if(!resetInsertionPosition || isCommand)
+
+                if(!resetInsertionPosition || isCommand) {
                     fixedMessage.append(fixedRTLPart);
-                else {
+                } else {
                     fixedMessage.insert(0, fixedRTLPart);
                     resetInsertionPosition = false;
                 }
@@ -65,15 +66,16 @@ public class FixHandlerPost1_16 extends FixHandler {
                     if(!isRTLMessage(words[i])) {
                         fixedLTRPart.append(words[i]).append(" ");
                     } else {
+                        i--;
                         break;
                     }
                 }
-                i--;
                 resetInsertionPosition = true;
-                if(isCommand)
+                if(isCommand) {
                     fixedMessage.append(fixedLTRPart);
-                else
+                } else {
                     fixedMessage.insert(0, fixedLTRPart);
+                }
             }
         }
         return fixedMessage.toString();
