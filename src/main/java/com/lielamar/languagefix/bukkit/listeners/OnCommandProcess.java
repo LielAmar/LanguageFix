@@ -14,8 +14,13 @@ import java.util.List;
 public class OnCommandProcess implements Listener {
 
     private final LanguageFix plugin;
+    private List<String> fixedCommands;
+
     public OnCommandProcess(LanguageFix plugin) {
         this.plugin = plugin;
+
+        if(plugin.getConfig().contains("Fixed Commands"))
+            this.fixedCommands = plugin.getConfig().getStringList("Fixed Commands");
     }
 
     @EventHandler (priority = EventPriority.HIGHEST)
@@ -38,10 +43,7 @@ public class OnCommandProcess implements Listener {
     }
 
     public boolean isFixedCommand(String cmd) {
-        if(!plugin.getConfig().contains("Fixed Commands")) return false;
-        List<String> fixedCommands = plugin.getConfig().getStringList("Fixed Commands");
-
-        for(String fixedCommand : fixedCommands) {
+        for(String fixedCommand : this.fixedCommands) {
             if(cmd.toLowerCase().startsWith(fixedCommand.toLowerCase()) || cmd.toLowerCase().startsWith("/" + fixedCommand.toLowerCase()))
                 return true;
         }
