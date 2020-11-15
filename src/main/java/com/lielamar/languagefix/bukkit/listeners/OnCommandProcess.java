@@ -28,14 +28,16 @@ public class OnCommandProcess implements Listener {
             if(!player.hasPermission("languagefix.oncommands")) return;
         }
 
+        // TODO: replace the message with only the arguments
+
         String message = event.getMessage();
 
         if(!message.contains(" ")) return;
         if(!LanguageFixUtils.isFixedCommand(message, plugin.getConfigHandler().getFixedCommands())) return;
 
-        String fixedCommand = plugin.getFixHandler().fixRTLMessage(event.getMessage(), true);
-        LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), event.getMessage(), fixedCommand);
-        Bukkit.getPluginManager().callEvent(languageFixEvent);
+        String fixedCommand = plugin.getFixHandler().fixRTLMessage(message, true);
+        LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), message, fixedCommand);
+        Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(languageFixEvent));
 
         if(!languageFixEvent.isCancelled())
             event.setMessage(languageFixEvent.getFixedMessage());

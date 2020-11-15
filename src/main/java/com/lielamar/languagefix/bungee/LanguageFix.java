@@ -4,6 +4,7 @@ import com.lielamar.languagefix.bungee.handlers.ConfigHandler;
 import com.lielamar.languagefix.bungee.listeners.OnCommandProcess;
 import com.lielamar.languagefix.bungee.listeners.OnPlayerChat;
 import com.lielamar.languagefix.bungee.listeners.OnPlayerConnections;
+import com.lielamar.languagefix.shared.MetricsBungee;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPre1_16;
 import com.lielamar.languagefix.shared.modules.FixHandler;
 import com.lielamar.languagefix.shared.handlers.PlayerHandler;
@@ -20,7 +21,9 @@ public class LanguageFix extends Plugin {
     @Override
     public void onEnable() {
         setupLanguageFix();
+
         registerListeners();
+        setupBStats();
     }
 
     public void registerListeners() {
@@ -29,6 +32,11 @@ public class LanguageFix extends Plugin {
         pm.registerListener(this, new OnPlayerConnections(this));
         pm.registerListener(this, new OnPlayerChat(this));
         pm.registerListener(this, new OnCommandProcess(this));
+    }
+
+    public void setupBStats() {
+        int pluginId = 9417;
+        new MetricsBungee(this, pluginId);
     }
 
 

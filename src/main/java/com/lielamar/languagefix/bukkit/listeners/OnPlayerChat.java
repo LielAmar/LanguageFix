@@ -28,7 +28,7 @@ public class OnPlayerChat implements Listener {
 
         String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage(), false);
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), event.getMessage(), fixedMessage);
-        Bukkit.getPluginManager().callEvent(languageFixEvent);
+        Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(languageFixEvent));
 
         if(!languageFixEvent.isCancelled()) {
             event.setCancelled(true);

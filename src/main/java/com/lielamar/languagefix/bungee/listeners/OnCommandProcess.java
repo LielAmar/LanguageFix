@@ -39,7 +39,8 @@ public class OnCommandProcess implements Listener {
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(player, event.getMessage(), fixedCommand);
         ProxyServer.getInstance().getPluginManager().callEvent(languageFixEvent);
 
-        if(!languageFixEvent.isCancelled())
+        if(!languageFixEvent.isCancelled()) {
             event.setMessage(languageFixEvent.getFixedMessage());
+        }
     }
 }

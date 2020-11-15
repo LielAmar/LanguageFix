@@ -4,7 +4,7 @@ import com.lielamar.languagefix.bukkit.listeners.OnCommandProcess;
 import com.lielamar.languagefix.bukkit.listeners.OnPlayerChat;
 import com.lielamar.languagefix.bukkit.listeners.OnPlayerConnections;
 import com.lielamar.languagefix.bukkit.listeners.OnSignChange;
-import com.lielamar.languagefix.shared.Metrics;
+import com.lielamar.languagefix.shared.MetricsSpigot;
 import com.lielamar.languagefix.shared.handlers.ConfigHandler;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPost1_16;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPre1_16;
@@ -42,7 +42,7 @@ public class LanguageFix extends JavaPlugin {
 
     public void setupBStats() {
         int pluginId = 9417;
-        new Metrics(this, pluginId);
+        new MetricsSpigot(this, pluginId);
     }
 
 

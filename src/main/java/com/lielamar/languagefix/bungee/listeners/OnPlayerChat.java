@@ -18,6 +18,8 @@ public class OnPlayerChat implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(ChatEvent event) {
+        if(event.isCommand()) return;
+
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
 
         if(!plugin.getFixHandler().isRTLMessage(event.getMessage())) return;

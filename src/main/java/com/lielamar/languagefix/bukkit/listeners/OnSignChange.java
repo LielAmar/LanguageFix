@@ -30,7 +30,7 @@ public class OnSignChange implements Listener {
             fixedLines[i] = plugin.getFixHandler().fixRTLMessage(event.getLine(i), false);
 
         SignLanguageFixEvent signLanguageFixEvent = new SignLanguageFixEvent(player, event.getLines(), fixedLines);
-        Bukkit.getPluginManager().callEvent(signLanguageFixEvent);
+        Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(signLanguageFixEvent));
 
         if(!signLanguageFixEvent.isCancelled()) {
             for(int i = 0; i < event.getLines().length; i++)
