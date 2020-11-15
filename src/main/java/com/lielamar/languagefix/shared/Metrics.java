@@ -1,4 +1,4 @@
-package com.lielamar.auth.shared;
+package com.lielamar.languagefix.shared;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;

@@ -14,6 +14,7 @@ public class LanguageFixEvent extends Event implements Cancellable {
     private boolean cancelled = false;
 
     public LanguageFixEvent(Player sender, String originalMessage, String fixedMessage) {
+        super(true);
         this.sender = sender;
         this.originalMessage = originalMessage;
         this.fixedMessage = fixedMessage;

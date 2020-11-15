@@ -13,15 +13,10 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
 
     private Method getHandle = null;
     private Field locale = null;
-    {
-        try {
-            Class<?> craftPlayer = getClass("org.bukkit.craftbukkit", "entity.CraftPlayer");
-            getHandle = craftPlayer.getMethod("getHandle");
-            locale = craftPlayer.getDeclaredField("locale");
-            locale.setAccessible(true);
-        } catch (NoSuchMethodException | NoSuchFieldException e) {
-            e.printStackTrace();
-        }
+
+    public PlayerHandler() {
+        for(Player pl : Bukkit.getOnlinePlayers())
+            onJoin(pl.getUniqueId());
     }
 
     @Override
@@ -30,7 +25,18 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
         if(player == null || !player.isOnline()) return null;
 
         try {
+            if(getHandle == null) {
+                Class<?> craftPlayerClass = getClass("org.bukkit.craftbukkit", "entity.CraftPlayer");
+                getHandle = craftPlayerClass.getMethod("getHandle");
+            }
+
             Object craftPlayer = getHandle.invoke(player);
+
+            if(locale == null) {
+                locale = craftPlayer.getClass().getDeclaredField("locale");
+                locale.setAccessible(true);
+            }
+
             String language = (String) locale.get(craftPlayer);
 
             for(Language lang : Language.values()) {
@@ -38,7 +44,7 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
                     return lang;
             }
             return null;
-        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+        } catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchFieldException | NoSuchMethodException e) {
             e.printStackTrace();
             return null;
         }

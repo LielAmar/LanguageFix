@@ -2,6 +2,7 @@ package com.lielamar.languagefix.bukkit.listeners;
 
 import com.lielamar.languagefix.bukkit.LanguageFix;
 import com.lielamar.languagefix.bukkit.events.SignLanguageFixEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,17 +18,23 @@ public class OnSignChange implements Listener {
     @EventHandler
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
-        if(!player.hasPermission("languagefix.onsign")) return;
+
         if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
+
+        if(plugin.getConfigHandler().isRequiredPermissions()) {
+            if(!player.hasPermission("languagefix.onsign")) return;
+        }
 
         String[] fixedLines = new String[event.getLines().length];
         for(int i = 0; i < event.getLines().length; i++)
             fixedLines[i] = plugin.getFixHandler().fixRTLMessage(event.getLine(i));
 
         SignLanguageFixEvent signLanguageFixEvent = new SignLanguageFixEvent(player, event.getLines(), fixedLines);
-        if(signLanguageFixEvent.isCancelled()) return;
+        Bukkit.getPluginManager().callEvent(signLanguageFixEvent);
 
-        for(int i = 0; i < event.getLines().length; i++)
-            event.setLine(i, event.getLine(i));
+        if(!signLanguageFixEvent.isCancelled()) {
+            for(int i = 0; i < event.getLines().length; i++)
+                event.setLine(i, event.getLine(i));
+        }
     }
 }

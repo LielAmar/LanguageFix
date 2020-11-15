@@ -19,24 +19,27 @@ public class OnPlayerChat implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
-        if(!player.hasPermission("languagefix.onchat")) return;
 
         if(!plugin.getFixHandler().isRTLMessage(event.getMessage())) return;
+
+        if(plugin.getConfigHandler().isRequiredPermissions()) {
+            if(!player.hasPermission("languagefix.onchat")) return;
+        }
 
         String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage());
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), event.getMessage(), fixedMessage);
         Bukkit.getPluginManager().callEvent(languageFixEvent);
 
-        if(languageFixEvent.isCancelled()) return;
+        if(!languageFixEvent.isCancelled()) {
+            event.setCancelled(true);
 
-        event.setCancelled(true);
-
-        String format = event.getFormat();
-        for(Player pl : event.getRecipients()) {
-            if(plugin.getPlayerHandler().isRTLLanguage(pl.getUniqueId())) {
-                pl.sendMessage(String.format(format, player.getDisplayName(), event.getMessage()));
-            } else {
-                pl.sendMessage(String.format(format, player.getDisplayName(), languageFixEvent.getFixedMessage()));
+            String format = event.getFormat();
+            for(Player pl : event.getRecipients()) {
+                if(plugin.getPlayerHandler().isRTLLanguage(pl.getUniqueId())) {
+                    pl.sendMessage(String.format(format, player.getDisplayName(), event.getMessage()));
+                } else {
+                    pl.sendMessage(String.format(format, player.getDisplayName(), languageFixEvent.getFixedMessage()));
+                }
             }
         }
     }

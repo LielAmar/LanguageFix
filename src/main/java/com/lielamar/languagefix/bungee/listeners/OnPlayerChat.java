@@ -19,16 +19,18 @@ public class OnPlayerChat implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onChat(ChatEvent event) {
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
-        if(!player.hasPermission("languagefix.onchat")) return;
 
         if(!plugin.getFixHandler().isRTLMessage(event.getMessage())) return;
+
+        if(plugin.getConfigHandler().isRequiredPermissions()) {
+            if(!player.hasPermission("languagefix.onchat")) return;
+        }
 
         String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage());
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(player, event.getMessage(), fixedMessage);
         ProxyServer.getInstance().getPluginManager().callEvent(languageFixEvent);
 
-        if(languageFixEvent.isCancelled()) return;
-
-        event.setMessage(languageFixEvent.getFixedMessage());
+        if(!languageFixEvent.isCancelled())
+            event.setMessage(languageFixEvent.getFixedMessage());
     }
 }

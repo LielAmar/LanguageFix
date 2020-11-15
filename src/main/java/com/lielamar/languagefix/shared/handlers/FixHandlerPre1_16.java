@@ -2,7 +2,16 @@ package com.lielamar.languagefix.shared.handlers;
 
 import com.lielamar.languagefix.shared.modules.FixHandler;
 
-public class FixHandlerPre1_16_4 extends FixHandler {
+public class FixHandlerPre1_16 extends FixHandler {
+
+    /*
+     * This class fixes RTL messages for version below 1.16.
+     * The reason I have different classes for 1.16.4 below and above is because Mojang attempted to fix
+     * RTL issues in 1.16, however, only 1.16.4 was somewhat successful.
+     * This class is almost identical to the Post1.16.4 class, however, in this class I also attempt
+     * to fix RTL words (because Mojang don't handles that).
+     * I also handle the sentence logic.
+     */
 
     @Override
     public String fixRTLMessage(String message) {

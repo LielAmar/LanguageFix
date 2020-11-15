@@ -4,7 +4,8 @@ import com.lielamar.languagefix.bungee.handlers.ConfigHandler;
 import com.lielamar.languagefix.bungee.listeners.OnCommandProcess;
 import com.lielamar.languagefix.bungee.listeners.OnPlayerChat;
 import com.lielamar.languagefix.bungee.listeners.OnPlayerConnections;
-import com.lielamar.languagefix.shared.handlers.FixHandler;
+import com.lielamar.languagefix.shared.handlers.FixHandlerPre1_16;
+import com.lielamar.languagefix.shared.modules.FixHandler;
 import com.lielamar.languagefix.shared.handlers.PlayerHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Plugin;
@@ -34,7 +35,8 @@ public class LanguageFix extends Plugin {
     public void setupLanguageFix() {
         this.configHandler = new ConfigHandler(this);
         this.playerHandler = new com.lielamar.languagefix.bungee.handlers.PlayerHandler();
-        this.fixHandler = new FixHandler();
+
+        this.fixHandler = new FixHandlerPre1_16();
     }
 
     public ConfigHandler getConfigHandler() {

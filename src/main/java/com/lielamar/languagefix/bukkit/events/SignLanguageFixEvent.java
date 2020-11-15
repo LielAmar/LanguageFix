@@ -16,6 +16,7 @@ public class SignLanguageFixEvent extends Event implements Cancellable {
     private boolean cancelled = false;
 
     public SignLanguageFixEvent(Player sender, String[] originalMessages, String[] fixedMessages) {
+        super(true);
         this.sender = sender;
         this.originalMessages = originalMessages;
         this.fixedMessages = new String[4];
