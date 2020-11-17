@@ -70,6 +70,14 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
         resetLanguage(uuid);
     }
 
+
+    /**
+     * Return a class based on the package name, the server version and the class name
+     *
+     * @param packageName   Package Name
+     * @param className     Class Name
+     * @return              Class object
+     */
     public static Class<?> getClass(String packageName, String className) {
         String name = packageName + "." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3] + "." + className;
         Class<?> nmsClass = null;

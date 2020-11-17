@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 
 public class ServerVersion {
 
-    // Singleton
     private static final ServerVersion instance = new ServerVersion();
     public static ServerVersion getInstance() {
         return instance;
@@ -30,6 +29,12 @@ public class ServerVersion {
         return this.serverVersion.getStrippedName();
     }
 
+    /**
+     * Checks if the given version is above the server's version
+     *
+     * @param version   Version to compare
+     * @return          Whether the given version is above
+     */
     public boolean above(Version version) {
         return serverVersion.getId() >= version.getId();
     }
@@ -63,6 +68,6 @@ public class ServerVersion {
         public String getNMSName() { return this.name; }
         public String getStrippedName() { return this.name.substring(0, this.name.length()-1).replaceAll("v", "").replaceAll("R", "").replaceAll("_", "."); }
 
-        int getId() { return id; }
+        public int getId() { return id; }
     }
 }

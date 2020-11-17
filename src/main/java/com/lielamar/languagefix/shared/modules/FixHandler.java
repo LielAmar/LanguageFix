@@ -154,5 +154,5 @@ public abstract class FixHandler {
     }
 
 
-    public abstract String fixRTLMessage(String message, boolean isCommand);
+    public abstract String fixRTLMessage(String message);
 }

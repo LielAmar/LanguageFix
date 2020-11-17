@@ -20,16 +20,26 @@ public class OnPlayerChat implements Listener {
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
 
+        // If bungeecord is handling language fix
+        if(plugin.getPluginMessageListener().isBungeecord()) return;
+
+        // If the command is not RTL
         if(!plugin.getFixHandler().isRTLMessage(event.getMessage())) return;
 
+        // If the player's language is an RTL language
+        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
+
+        // If the player doesn't have permissions & permissions are required
         if(plugin.getConfigHandler().isRequiredPermissions()) {
             if(!player.hasPermission("languagefix.onchat")) return;
         }
 
-        String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage(), false);
+        // Fixing the message
+        String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage());
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(event.getPlayer(), event.getMessage(), fixedMessage);
         Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(languageFixEvent));
 
+        // Sending the fixed message to players with non-rtl client and the original message to rtl clients
         if(!languageFixEvent.isCancelled()) {
             event.setCancelled(true);
 

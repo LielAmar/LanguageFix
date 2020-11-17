@@ -6,12 +6,12 @@
 # ===========================================================================================
 
 Fixed Commands:
-  - message
-  - msg
-  - tell
-  - whisper
-  - w
-  - reply
-  - r
+  - "/message %player% %message"
+  - "/msg %player% %message%"
+  - "/tell %player% %message%"
+  - "/whisper %player% %message%"
+  - "/w %player% %message%"
+  - "/reply %message%"
+  - "/r %message%"
 
 Require Permissions: false

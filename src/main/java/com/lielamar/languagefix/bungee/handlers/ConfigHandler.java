@@ -18,10 +18,11 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
     public ConfigHandler(LanguageFix plugin) {
         this.plugin = plugin;
 
-        reload();
+        reloadConfig();
     }
 
-    public void reload() {
+    @Override
+    public void reloadConfig() {
         if(!plugin.getDataFolder().exists() && plugin.getDataFolder().mkdir()) {
             System.out.println("Generated Data Folder for LanguageFix!");
         }
@@ -49,7 +50,8 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
             this.requirePermissions = config.getBoolean("Require Permissions");
     }
 
-    public void save() {
+    @Override
+    public void saveConfig() {
         try {
             ConfigurationProvider.getProvider(YamlConfiguration.class).save(this.config, new File(plugin.getDataFolder(), configName));
         } catch(IOException e) {

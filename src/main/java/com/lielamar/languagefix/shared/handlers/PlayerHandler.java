@@ -27,7 +27,26 @@ public abstract class PlayerHandler {
      * @return       Player's game language
      */
     public abstract Language getClientLanguage(UUID uuid);
+
+    /**
+     * Checks if a player's language is an RTL language
+     *
+     * @param uuid   UUID of the player to check
+     * @return       Whether the language is RLT
+     */
     public abstract boolean isRTLLanguage(UUID uuid);
+
+    /**
+     * Method to call upon player join
+     *
+     * @param uuid   Player to perform method on
+     */
     public abstract void onJoin(UUID uuid);
+
+    /**
+     * Method to call upon player quit
+     *
+     * @param uuid   Player to perform method on
+     */
     public abstract void onQuit(UUID uuid);
 }

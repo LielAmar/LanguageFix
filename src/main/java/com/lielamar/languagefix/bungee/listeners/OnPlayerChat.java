@@ -2,6 +2,7 @@ package com.lielamar.languagefix.bungee.listeners;
 
 import com.lielamar.languagefix.bungee.LanguageFix;
 import com.lielamar.languagefix.bungee.events.LanguageFixEvent;
+import com.lielamar.languagefix.shared.modules.FixHandler;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.ChatEvent;
@@ -21,14 +22,21 @@ public class OnPlayerChat implements Listener {
         if(event.isCommand()) return;
 
         ProxiedPlayer player = (ProxiedPlayer) event.getSender();
+        FixHandler fixHandler = plugin.getFixHandler(player.getServer().getInfo().getName());
 
-        if(!plugin.getFixHandler().isRTLMessage(event.getMessage())) return;
+        // If the command is not RTL
+        if(!fixHandler.isRTLMessage(event.getMessage())) return;
 
+        // If the player's language is an RTL language
+        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
+
+        // If the player doesn't have permissions & permissions are required
         if(plugin.getConfigHandler().isRequiredPermissions()) {
             if(!player.hasPermission("languagefix.onchat")) return;
         }
 
-        String fixedMessage = plugin.getFixHandler().fixRTLMessage(event.getMessage(), false);
+        // Fixing the message
+        String fixedMessage = fixHandler.fixRTLMessage(event.getMessage());
         LanguageFixEvent languageFixEvent = new LanguageFixEvent(player, event.getMessage(), fixedMessage);
         ProxyServer.getInstance().getPluginManager().callEvent(languageFixEvent);
 

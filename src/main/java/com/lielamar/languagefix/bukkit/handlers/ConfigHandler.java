@@ -10,11 +10,11 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
     public ConfigHandler(LanguageFix plugin) {
         this.plugin = plugin;
 
-        reload();
+        reloadConfig();
     }
 
     @Override
-    public void reload() {
+    public void reloadConfig() {
         plugin.saveDefaultConfig();
 
         FileConfiguration config = plugin.getConfig();
@@ -27,7 +27,7 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
     }
 
     @Override
-    public void save() {
+    public void saveConfig() {
         plugin.saveConfig();
     }
 }

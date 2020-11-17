@@ -19,19 +19,24 @@ public class OnSignChange implements Listener {
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
 
+
+        // If the player's language is an RTL language
         if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
 
+        // If the player doesn't have permissions & permissions are required
         if(plugin.getConfigHandler().isRequiredPermissions()) {
             if(!player.hasPermission("languagefix.onsign")) return;
         }
 
+        // Fixing all lines
         String[] fixedLines = new String[event.getLines().length];
         for(int i = 0; i < event.getLines().length; i++)
-            fixedLines[i] = plugin.getFixHandler().fixRTLMessage(event.getLine(i), false);
+            fixedLines[i] = plugin.getFixHandler().fixRTLMessage(event.getLine(i));
 
         SignLanguageFixEvent signLanguageFixEvent = new SignLanguageFixEvent(player, event.getLines(), fixedLines);
         Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(signLanguageFixEvent));
 
+        // Setting the lines to the fixed lines
         if(!signLanguageFixEvent.isCancelled()) {
             for(int i = 0; i < event.getLines().length; i++)
                 event.setLine(i, event.getLine(i));
