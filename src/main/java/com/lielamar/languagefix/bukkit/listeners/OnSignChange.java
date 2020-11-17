@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.SignChangeEvent;
+import org.geysermc.floodgate.FloodgateAPI;
 
 public class OnSignChange implements Listener {
 
@@ -18,6 +19,9 @@ public class OnSignChange implements Listener {
     @EventHandler
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
+
+        // If the player is a bedrock edition player
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
 
         // If the player's language is an RTL language
         if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;

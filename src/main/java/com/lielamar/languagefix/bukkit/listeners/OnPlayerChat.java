@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
+import org.geysermc.floodgate.FloodgateAPI;
 
 public class OnPlayerChat implements Listener {
 
@@ -19,6 +20,9 @@ public class OnPlayerChat implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onChat(AsyncPlayerChatEvent event) {
         Player player = event.getPlayer();
+
+        // If the player is a bedrock edition player
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
 
         // If bungeecord is handling language fix
         if(plugin.getPluginMessageListener().isBungeecord()) return;

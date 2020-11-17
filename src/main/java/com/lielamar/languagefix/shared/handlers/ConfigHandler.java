@@ -8,6 +8,7 @@ public abstract class ConfigHandler {
 
     protected List<String> fixedCommands = null;
     protected boolean requirePermissions = false;
+    protected boolean usingFloodgate = false;
 
     /**
      * Checks if a command is a command we fix.
@@ -61,6 +62,14 @@ public abstract class ConfigHandler {
     public boolean isRequiredPermissions() {
         return requirePermissions;
     }
+
+    /**
+     * Whether the server uses Floodgate to support bedrock edition
+     *
+     * @return   Whether Floodgate is usd
+     */
+    public boolean isUsingFloodgate() { return this.usingFloodgate; }
+
 
     /**
      * Reloads the config

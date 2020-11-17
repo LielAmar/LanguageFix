@@ -8,6 +8,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.geysermc.floodgate.FloodgateAPI;
 
 public class OnCommandProcess implements Listener {
 
@@ -20,6 +21,9 @@ public class OnCommandProcess implements Listener {
     @EventHandler (priority = EventPriority.HIGHEST)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
+
+        // If the player is a bedrock edition player
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
 
         // If bungeecord is handling language fix
         if(plugin.getPluginMessageListener().isBungeecord()) return;

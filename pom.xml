@@ -6,13 +6,14 @@
 
     <groupId>com.lielamar.languagefix</groupId>
     <artifactId>LanguageFix</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <floodgate.path>D:/Build Tool/Floodgate.jar</floodgate.path>
     </properties>
 
     <build>
@@ -84,6 +85,14 @@
             <artifactId>annotations</artifactId>
             <version>16.0.2</version>
             <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.geysermc</groupId>
+            <artifactId>Floodgate</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${floodgate.path}</systemPath>
         </dependency>
     </dependencies>
 </project>

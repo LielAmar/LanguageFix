@@ -1,6 +1,7 @@
 package com.lielamar.languagefix.bukkit.handlers;
 
 import com.lielamar.languagefix.bukkit.LanguageFix;
+import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 
 public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.ConfigHandler {
@@ -24,6 +25,8 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
 
         if(config.contains("Require Permissions"))
             this.requirePermissions = config.getBoolean("Require Permissions");
+
+        usingFloodgate = Bukkit.getPluginManager().getPlugin("floodgate-bukkit") != null;
     }
 
     @Override

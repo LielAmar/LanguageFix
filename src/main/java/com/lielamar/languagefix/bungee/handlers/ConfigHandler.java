@@ -1,6 +1,7 @@
 package com.lielamar.languagefix.bungee.handlers;
 
 import com.lielamar.languagefix.bungee.LanguageFix;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.config.Configuration;
 import net.md_5.bungee.config.ConfigurationProvider;
 import net.md_5.bungee.config.YamlConfiguration;
@@ -48,6 +49,8 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
 
         if(config.contains("Require Permissions"))
             this.requirePermissions = config.getBoolean("Require Permissions");
+
+        usingFloodgate = ProxyServer.getInstance().getPluginManager().getPlugin("floodgate-bungee") != null;
     }
 
     @Override
