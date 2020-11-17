@@ -1,6 +1,6 @@
 name: LanguageFix
 author: LielAmar
-version: 1.1
+version: 1.1.1
 description: Fixes RTL issues in Minecraft
 main: com.lielamar.languagefix.bukkit.LanguageFix
 

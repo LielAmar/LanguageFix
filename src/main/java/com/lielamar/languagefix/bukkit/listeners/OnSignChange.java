@@ -19,7 +19,6 @@ public class OnSignChange implements Listener {
     public void onSignChange(SignChangeEvent event) {
         Player player = event.getPlayer();
 
-
         // If the player's language is an RTL language
         if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
 
@@ -39,7 +38,7 @@ public class OnSignChange implements Listener {
         // Setting the lines to the fixed lines
         if(!signLanguageFixEvent.isCancelled()) {
             for(int i = 0; i < event.getLines().length; i++)
-                event.setLine(i, event.getLine(i));
+                event.setLine(i, fixedLines[i]);
         }
     }
 }
