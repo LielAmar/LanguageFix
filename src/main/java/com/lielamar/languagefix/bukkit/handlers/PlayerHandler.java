@@ -1,6 +1,7 @@
 package com.lielamar.languagefix.bukkit.handlers;
 
 import com.lielamar.languagefix.shared.modules.Language;
+import com.lielamar.languagefix.shared.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -26,7 +27,7 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
 
         try {
             if(getHandle == null) {
-                Class<?> craftPlayerClass = getClass("org.bukkit.craftbukkit", "entity.CraftPlayer");
+                Class<?> craftPlayerClass = Utils.getClass("org.bukkit.craftbukkit", "entity.CraftPlayer");
                 getHandle = craftPlayerClass.getMethod("getHandle");
             }
 
@@ -68,23 +69,5 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
     @Override
     public void onQuit(UUID uuid) {
         resetLanguage(uuid);
-    }
-
-
-    /**
-     * Return a class based on the package name, the server version and the class name
-     *
-     * @param packageName   Package Name
-     * @param className     Class Name
-     * @return              Class object
-     */
-    public static Class<?> getClass(String packageName, String className) {
-        String name = packageName + "." + Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3] + "." + className;
-        Class<?> nmsClass = null;
-
-        try { nmsClass = Class.forName(name); }
-        catch (ClassNotFoundException e) { e.printStackTrace(); }
-
-        return nmsClass;
     }
 }

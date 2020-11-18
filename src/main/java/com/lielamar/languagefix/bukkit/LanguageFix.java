@@ -1,7 +1,6 @@
 package com.lielamar.languagefix.bukkit;
 
 import com.lielamar.languagefix.bukkit.listeners.*;
-import com.lielamar.languagefix.shared.MetricsSpigot;
 import com.lielamar.languagefix.shared.handlers.ConfigHandler;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPost1_16;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPre1_16;
@@ -9,6 +8,8 @@ import com.lielamar.languagefix.shared.modules.FixHandler;
 import com.lielamar.languagefix.shared.handlers.PlayerHandler;
 import com.lielamar.languagefix.shared.modules.ServerVersion;
 import com.lielamar.languagefix.shared.utils.Constants;
+import com.lielamar.lielsutils.bstats.MetricsSpigot;
+import com.lielamar.lielsutils.update.UpdateChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -25,6 +26,9 @@ public class LanguageFix extends JavaPlugin {
     @Override
     public void onEnable() {
         saveDefaultConfig();
+
+        if(getConfig().getBoolean("Check For Updates"))
+            new UpdateChecker(this, 85682).checkForUpdates();
 
         setupLanguageFix();
 
@@ -48,7 +52,7 @@ public class LanguageFix extends JavaPlugin {
         // If there are already players in the server, communicate with bungeecord immediately
         if(Bukkit.getOnlinePlayers().size() > 0) {
             for(Player pl : Bukkit.getOnlinePlayers()) {
-                pluginMessageListener.sendBungeecordServerVersionRequest(pl);
+                pluginMessageListener.sendBungeecordMessage(pl);
                 break;
             }
         }

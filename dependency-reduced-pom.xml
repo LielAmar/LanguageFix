@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.lielamar.languagefix</groupId>
   <artifactId>LanguageFix</artifactId>
-  <version>1.1.2</version>
+  <version>1.1.3</version>
   <build>
     <plugins>
       <plugin>
@@ -27,7 +27,6 @@
               <artifactSet>
                 <includes>
                   <include>com.lielamar:LielsUtils**</include>
-                  <include>com.lielamar:PacketManager**</include>
                 </includes>
               </artifactSet>
             </configuration>
@@ -37,6 +36,10 @@
     </plugins>
   </build>
   <repositories>
+    <repository>
+      <id>lielamar-api</id>
+      <url>https://api.lielamar.com/repository/maven-public/</url>
+    </repository>
     <repository>
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>

@@ -6,6 +6,7 @@ import com.google.common.io.ByteStreams;
 import com.lielamar.languagefix.bukkit.LanguageFix;
 import com.lielamar.languagefix.shared.modules.ServerVersion;
 import com.lielamar.languagefix.shared.utils.Constants;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -74,7 +75,7 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         if(!sentRequest) {
-            sendBungeecordServerVersionRequest(event.getPlayer());
+            sendBungeecordMessage(event.getPlayer());
         }
     }
 
@@ -82,14 +83,9 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
     /**
      * Adding delay before actually sending a message to bungeecord
      */
-    public void sendBungeecordServerVersionRequest(Player player) {
+    public void sendBungeecordMessage(Player player) {
         // Need some delay because we can't send a message as soon as a player joins
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                setBungeecordServerVersion(player);
-            }
-        }.runTaskLater(plugin, 2L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> setBungeecordServerVersion(player), 2L);
     }
 
     /**

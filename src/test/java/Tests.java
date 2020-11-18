@@ -55,11 +55,6 @@ public class Tests {
     }
 
     public static void main(String[] args) {
-        String test = "!my name is liel םולש,";
-
-        String fixed = fixRTLMessage(test.split(" "));
-
-        System.out.println("Original: " + test);
-        System.out.println("Fixed: " + fixed);
+        System.out.println(12_000);
     }
 }
