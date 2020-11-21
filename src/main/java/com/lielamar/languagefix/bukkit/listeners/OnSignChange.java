@@ -1,7 +1,7 @@
 package com.lielamar.languagefix.bukkit.listeners;
 
 import com.lielamar.languagefix.bukkit.LanguageFix;
-import com.lielamar.languagefix.bukkit.events.SignLanguageFixEvent;
+import com.lielamar.languagefix.bukkit.events.MultiLanguageFixEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -36,11 +36,11 @@ public class OnSignChange implements Listener {
         for(int i = 0; i < event.getLines().length; i++)
             fixedLines[i] = plugin.getFixHandler().fixRTLMessage(event.getLine(i));
 
-        SignLanguageFixEvent signLanguageFixEvent = new SignLanguageFixEvent(player, event.getLines(), fixedLines);
-        Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(signLanguageFixEvent));
+        MultiLanguageFixEvent multiLanguageFixEvent = new MultiLanguageFixEvent(player, event.getLines(), fixedLines);
+        Bukkit.getScheduler().runTask(plugin, () -> Bukkit.getPluginManager().callEvent(multiLanguageFixEvent));
 
         // Setting the lines to the fixed lines
-        if(!signLanguageFixEvent.isCancelled()) {
+        if(!multiLanguageFixEvent.isCancelled()) {
             for(int i = 0; i < event.getLines().length; i++)
                 event.setLine(i, fixedLines[i]);
         }

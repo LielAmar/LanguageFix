@@ -6,8 +6,9 @@ import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
-public class SignLanguageFixEvent extends Event implements Cancellable {
+public class MultiLanguageFixEvent extends Event implements Cancellable {
 
     private static final HandlerList handlers = new HandlerList();
     private final Player sender;
@@ -15,11 +16,20 @@ public class SignLanguageFixEvent extends Event implements Cancellable {
     private final String[] fixedMessages;
     private boolean cancelled = false;
 
-    public SignLanguageFixEvent(Player sender, String[] originalMessages, String[] fixedMessages) {
+    public MultiLanguageFixEvent(Player sender, String[] originalMessages, String[] fixedMessages) {
         super(false);
         this.sender = sender;
         this.originalMessages = originalMessages;
         this.fixedMessages = new String[4];
+
+        System.arraycopy(fixedMessages, 0, this.fixedMessages, 0, this.fixedMessages.length);
+    }
+
+    public MultiLanguageFixEvent(Player sender, List<String> originalMessages, String[] fixedMessages) {
+        super(false);
+        this.sender = sender;
+        this.originalMessages = originalMessages.toArray(new String[0]);
+        this.fixedMessages = new String[this.originalMessages.length];
 
         System.arraycopy(fixedMessages, 0, this.fixedMessages, 0, this.fixedMessages.length);
     }

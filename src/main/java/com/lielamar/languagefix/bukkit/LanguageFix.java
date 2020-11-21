@@ -43,6 +43,8 @@ public class LanguageFix extends JavaPlugin {
         pm.registerEvents(new OnPlayerChat(this), this);
         pm.registerEvents(new OnCommandProcess(this), this);
         pm.registerEvents(new OnSignChange(this), this);
+        pm.registerEvents(new OnItemRename(this), this);
+        pm.registerEvents(new OnBookEdit(this), this);
 
         pluginMessageListener = new BungeecordMessageHandler(this);
         pm.registerEvents(pluginMessageListener, this);
