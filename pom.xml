@@ -6,13 +6,14 @@
 
     <groupId>com.lielamar.languagefix</groupId>
     <artifactId>LanguageFix</artifactId>
-    <version>1.1.4</version>
+    <version>1.1.5</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <craftbukkit.path>D:/Build Tool/spigot-1.15.2.jar</craftbukkit.path>
         <floodgate.path>D:/Build Tool/Floodgate.jar</floodgate.path>
     </properties>
 
@@ -23,8 +24,8 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>3.5.1</version>
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>${maven.compiler.source}</source>
+                    <target>${maven.compiler.target}</target>
                 </configuration>
             </plugin>
 
@@ -39,11 +40,13 @@
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <artifactSet>
-                                <includes>
-                                    <include>com.lielamar:LielsUtils**</include>
-                                </includes>
-                            </artifactSet>
+                            <createDependencyReducedPom>false</createDependencyReducedPom>
+                            <relocations>
+                                <relocation>
+                                    <pattern>com.lielamar.lielsutils</pattern>
+                                    <shadedPattern>com.lielamar.languagefix.lib.lielsutils</shadedPattern>
+                                </relocation>
+                            </relocations>
                         </configuration>
                     </execution>
                 </executions>
@@ -58,11 +61,6 @@
         </repository>
 
         <repository>
-            <id>spigot-repo</id>
-            <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
-        </repository>
-
-        <repository>
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
@@ -71,15 +69,9 @@
     <dependencies>
         <dependency>
             <groupId>com.lielamar</groupId>
-            <artifactId>LielsUtils</artifactId>
-            <version>1.2.2</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.spigotmc</groupId>
-            <artifactId>spigot</artifactId>
-            <version>1.15.2-R0.1-SNAPSHOT</version>
-            <scope>provided</scope>
+            <artifactId>lielsutils</artifactId>
+            <version>1.2.4</version>
+            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -91,10 +83,11 @@
         </dependency>
 
         <dependency>
-            <groupId>org.jetbrains</groupId>
-            <artifactId>annotations</artifactId>
-            <version>16.0.2</version>
-            <scope>compile</scope>
+            <groupId>org.bukkit</groupId>
+            <artifactId>craftbukkit</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${craftbukkit.path}</systemPath>
         </dependency>
 
         <dependency>
