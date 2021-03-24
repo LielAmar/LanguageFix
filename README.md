@@ -1,7 +1,7 @@
 # LanguageFix
 
-[<img alt="spigot" src="https://lielamar.com/cdn/plugins/github_spigot.png" size=1.5>](https://www.spigotmc.org/resources/language-fix.85682/)
-<br>[<img alt="discord" src="https://lielamar.com/cdn/plugins/github_discord.png" size=1.5>](https://discord.gg/NzgBrqR)
+[<img alt="spigot" src="https://lielamar.com/plugins/github_spigot.png" size=1.5>](https://www.spigotmc.org/resources/language-fix.85682/)
+<br>[<img alt="discord" src="https://lielamar.com/plugins/github_discord.png" size=1.5>](https://discord.gg/NzgBrqR)
 
 
 ## Information
