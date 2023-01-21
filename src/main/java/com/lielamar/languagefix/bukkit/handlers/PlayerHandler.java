@@ -53,21 +53,20 @@ public class PlayerHandler extends com.lielamar.languagefix.shared.handlers.Play
 
     @Override
     public boolean isRTLLanguage(UUID uuid) {
-        return getLanguage(uuid) != null;
+        return super.getLanguage(uuid) != null;
     }
 
     @Override
     public void onJoin(UUID uuid) {
-        Language language = getClientLanguage(uuid);
-        if(language == null) {
+        Language language = this.getClientLanguage(uuid);
+        if(language == null)
             return;
-        }
 
-        setLanguage(uuid, language);
+        super.setLanguage(uuid, language);
     }
 
     @Override
     public void onQuit(UUID uuid) {
-        resetLanguage(uuid);
+        super.resetLanguage(uuid);
     }
 }

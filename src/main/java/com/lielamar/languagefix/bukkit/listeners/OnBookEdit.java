@@ -9,7 +9,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerEditBookEvent;
 import org.bukkit.inventory.meta.BookMeta;
-import org.geysermc.floodgate.FloodgateAPI;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class OnBookEdit implements Listener {
 
@@ -23,14 +23,17 @@ public class OnBookEdit implements Listener {
         Player player = event.getPlayer();
 
         // If the player is a bedrock edition player
-        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId()))
+            return;
 
         // If the player's language is an RTL language
-        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
+        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId()))
+            return;
 
         // If the player doesn't have permissions & permissions are required
         if(plugin.getConfigHandler().isRequiredPermissions()) {
-            if(!player.hasPermission("languagefix.onbook")) return;
+            if(!player.hasPermission("languagefix.onbook"))
+                return;
         }
 
         // Comparing the two book metas, the previous and the new one

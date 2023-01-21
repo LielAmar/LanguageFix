@@ -6,10 +6,10 @@ import com.lielamar.languagefix.shared.handlers.FixHandlerPost1_16;
 import com.lielamar.languagefix.shared.handlers.FixHandlerPre1_16;
 import com.lielamar.languagefix.shared.modules.FixHandler;
 import com.lielamar.languagefix.shared.handlers.PlayerHandler;
-import com.lielamar.languagefix.shared.modules.ServerVersion;
 import com.lielamar.languagefix.shared.utils.Constants;
-import com.lielamar.lielsutils.bstats.MetricsSpigot;
-import com.lielamar.lielsutils.update.UpdateChecker;
+import com.lielamar.lielsutils.bukkit.bstats.BukkitMetrics;
+import com.lielamar.lielsutils.bukkit.updater.SpigotUpdateChecker;
+import com.lielamar.lielsutils.bukkit.version.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -17,7 +17,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class LanguageFix extends JavaPlugin {
 
-    private BungeecordMessageHandler pluginMessageListener;
+    private MessageHandler pluginMessageListener;
 
     private ConfigHandler configHandler;
     private PlayerHandler playerHandler;
@@ -27,13 +27,11 @@ public class LanguageFix extends JavaPlugin {
     public void onEnable() {
         saveDefaultConfig();
 
-        if(getConfig().getBoolean("Check For Updates"))
-            new UpdateChecker(this, 85682).checkForUpdates();
+        this.setupLanguageFix();
+        this.registerListeners();
 
-        setupLanguageFix();
-
-        registerListeners();
-        setupBStats();
+        this.setupBStats();
+        this.setupUpdateChecker();
     }
 
     public void registerListeners() {
@@ -46,7 +44,7 @@ public class LanguageFix extends JavaPlugin {
         pm.registerEvents(new OnItemRename(this), this);
         pm.registerEvents(new OnBookEdit(this), this);
 
-        pluginMessageListener = new BungeecordMessageHandler(this);
+        pluginMessageListener = new MessageHandler(this);
         pm.registerEvents(pluginMessageListener, this);
         getServer().getMessenger().registerOutgoingPluginChannel(this, Constants.channelName);
         getServer().getMessenger().registerIncomingPluginChannel(this, Constants.channelName, pluginMessageListener);
@@ -54,40 +52,37 @@ public class LanguageFix extends JavaPlugin {
         // If there are already players in the server, communicate with bungeecord immediately
         if(Bukkit.getOnlinePlayers().size() > 0) {
             for(Player pl : Bukkit.getOnlinePlayers()) {
-                pluginMessageListener.sendBungeecordMessage(pl);
+                pluginMessageListener.sendProxyMessage(pl);
                 break;
             }
         }
     }
 
-    public BungeecordMessageHandler getPluginMessageListener() {
+    public MessageHandler getPluginMessageListener() {
         return this.pluginMessageListener;
     }
 
 
-    // =======================
-    // Setting up Language Fix
-    // =======================
     public void setupLanguageFix() {
         this.configHandler = new com.lielamar.languagefix.bukkit.handlers.ConfigHandler(this);
         this.playerHandler = new com.lielamar.languagefix.bukkit.handlers.PlayerHandler();
 
-        if(ServerVersion.getInstance().above(ServerVersion.Version.v1_16_R1)) {
-            this.fixHandler = new FixHandlerPost1_16();
-        } else {
-            this.fixHandler = new FixHandlerPre1_16();
-        }
+        this.fixHandler = (Version.getInstance().getServerVersion().above(Version.ServerVersion.v1_16_1)) ?
+                new FixHandlerPost1_16() : new FixHandlerPre1_16();
     }
 
     public ConfigHandler getConfigHandler() { return this.configHandler; }
     public PlayerHandler getPlayerHandler() { return this.playerHandler; }
-    public FixHandler getFixHandler() { return this.fixHandler; }
+    public FixHandler getFixHandler()       { return this.fixHandler; }
 
-    // =======================
-    // Setting up bStats
-    // =======================
-    public void setupBStats() {
+
+    private void setupBStats() {
         int pluginId = 9417;
-        new MetricsSpigot(this, pluginId);
+        BukkitMetrics metrics = new BukkitMetrics(this, pluginId);
+    }
+
+    private void setupUpdateChecker() {
+        if(getConfig().getBoolean("check-for-updates"))
+            new SpigotUpdateChecker(this, 85682).checkForUpdates();
     }
 }

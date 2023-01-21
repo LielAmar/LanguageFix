@@ -4,8 +4,8 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.lielamar.languagefix.bungee.LanguageFix;
-import com.lielamar.languagefix.shared.modules.ServerVersion;
 import com.lielamar.languagefix.shared.utils.Constants;
+import com.lielamar.lielsutils.bukkit.version.Version;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PluginMessageEvent;
@@ -44,7 +44,7 @@ public class BungeecordMessageHandler implements Listener {
 
                 if(action.equals(Constants.setVersion)) {
                     String server = player.getServer().getInfo().getName();
-                    plugin.getServerHandler().setServerVersion(server, ServerVersion.Version.valueOf(msgIn.readUTF()));
+                    plugin.getServerHandler().setServerVersion(server, Version.ServerVersion.valueOf(msgIn.readUTF()));
 
                     // Sending a response to let Spigot know BungeeCord established connection
                     sendResponse(player, Constants.setVersion, Constants.established);

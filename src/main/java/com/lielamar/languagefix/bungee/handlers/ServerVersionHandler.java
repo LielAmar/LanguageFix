@@ -1,13 +1,13 @@
 package com.lielamar.languagefix.bungee.handlers;
 
-import com.lielamar.languagefix.shared.modules.ServerVersion;
+import com.lielamar.lielsutils.bukkit.version.Version;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class ServerVersionHandler {
 
-    private final Map<String, ServerVersion.Version> servers;
+    private final Map<String, Version.ServerVersion> servers;
 
     public ServerVersionHandler() {
         this.servers = new HashMap<>();
@@ -19,7 +19,7 @@ public class ServerVersionHandler {
      * @param server    Server to set version of
      * @param version   Version to set
      */
-    public void setServerVersion(String server, ServerVersion.Version version) {
+    public void setServerVersion(String server, Version.ServerVersion version) {
         servers.put(server, version);
     }
 
@@ -29,9 +29,9 @@ public class ServerVersionHandler {
      * @param server   Server to get version of
      * @return         Version
      */
-    public ServerVersion.Version getServerVersion(String server) {
+    public Version.ServerVersion getServerVersion(String server) {
         if(!servers.containsKey(server))
-            return ServerVersion.Version.v1_15_R1; // Default Server Version
+            return Version.ServerVersion.v1_15_1; // Default Server Version
         return servers.get(server);
     }
 }

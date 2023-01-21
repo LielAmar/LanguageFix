@@ -14,7 +14,7 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.AnvilInventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.geysermc.floodgate.FloodgateAPI;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class OnItemRename implements Listener {
 
@@ -30,23 +30,28 @@ public class OnItemRename implements Listener {
         Player player = (Player) event.getWhoClicked();
 
         // If the player is a bedrock edition player
-        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId()))
+            return;
 
         // If the player's language is an RTL language
-        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId())) return;
+        if(plugin.getPlayerHandler().isRTLLanguage(player.getUniqueId()))
+            return;
 
         // If the player doesn't have permissions & permissions are required
         if(plugin.getConfigHandler().isRequiredPermissions()) {
-            if(!player.hasPermission("languagefix.onanvil")) return;
+            if(!player.hasPermission("languagefix.onanvil"))
+                return;
         }
 
         if(event.getView().getType() == InventoryType.ANVIL) {
-            AnvilInventory inventory = (AnvilInventory)event.getInventory();
+            AnvilInventory inventory = (AnvilInventory) event.getInventory();
 
             if(event.getSlotType() == InventoryType.SlotType.RESULT) {
                 ItemStack item = event.getInventory().getContents()[0];
                 ItemStack result = event.getCurrentItem();
-                if(result == null || result.getType() == Material.AIR || !result.hasItemMeta()) return;
+
+                if(result == null || result.getType() == Material.AIR || !result.hasItemMeta())
+                    return;
 
                 ItemMeta itemMeta = item.getItemMeta();
                 ItemMeta resultMeta = result.getItemMeta();
@@ -56,7 +61,7 @@ public class OnItemRename implements Listener {
                         itemMeta.hasDisplayName() && !resultMeta.hasDisplayName() ||
                         !itemMeta.getDisplayName().equals(resultMeta.getDisplayName()))) {
 
-                    if(inventory.getRepairCost() < player.getLevel() || player.getGameMode() == GameMode.CREATIVE) {
+                    if(player.getGameMode() == GameMode.CREATIVE) {
                         String name = resultMeta.getDisplayName();
                         String fixedName = plugin.getFixHandler().fixRTLMessage(name);
 

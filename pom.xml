@@ -6,15 +6,14 @@
 
     <groupId>com.lielamar.languagefix</groupId>
     <artifactId>LanguageFix</artifactId>
-    <version>1.1.5</version>
+    <version>1.1.6</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
-        <craftbukkit.path>D:/Build Tool/spigot-1.15.2.jar</craftbukkit.path>
-        <floodgate.path>D:/Build Tool/Floodgate.jar</floodgate.path>
     </properties>
 
     <build>
@@ -43,7 +42,7 @@
                             <createDependencyReducedPom>false</createDependencyReducedPom>
                             <relocations>
                                 <relocation>
-                                    <pattern>com.lielamar.lielsutils</pattern>
+                                    <pattern>com.lielamar.LielsUtils</pattern>
                                     <shadedPattern>com.lielamar.languagefix.lib.lielsutils</shadedPattern>
                                 </relocation>
                             </relocations>
@@ -64,38 +63,41 @@
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+
+        <repository>
+            <id>opencollab-snapshot</id>
+            <url>https://repo.opencollab.dev/maven-snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
         <dependency>
             <groupId>com.lielamar</groupId>
-            <artifactId>lielsutils</artifactId>
-            <version>1.2.4</version>
+            <artifactId>LielsUtils</artifactId>
+            <version>1.6.29</version>
             <scope>compile</scope>
         </dependency>
 
         <dependency>
             <groupId>net.md-5</groupId>
             <artifactId>bungeecord-api</artifactId>
-            <version>1.16-R0.4-SNAPSHOT</version>
+            <version>1.16-R0.4</version>
             <type>jar</type>
             <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.bukkit</groupId>
-            <artifactId>craftbukkit</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${craftbukkit.path}</systemPath>
+            <groupId>org.spigotmc</groupId>
+            <artifactId>spigot-api</artifactId>
+            <version>1.8.8-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
         <dependency>
-            <groupId>org.geysermc</groupId>
-            <artifactId>Floodgate</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${floodgate.path}</systemPath>
+            <groupId>org.geysermc.floodgate</groupId>
+            <artifactId>api</artifactId>
+            <version>2.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 </project>

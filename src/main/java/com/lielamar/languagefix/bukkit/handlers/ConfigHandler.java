@@ -20,11 +20,11 @@ public class ConfigHandler extends com.lielamar.languagefix.shared.handlers.Conf
 
         FileConfiguration config = plugin.getConfig();
 
-        if(config.contains("Fixed Commands"))
-            this.fixedCommands = config.getStringList("Fixed Commands");
+        if(config.contains("fixed-commands"))
+            this.fixedCommands = config.getStringList("fixed-commands");
 
-        if(config.contains("Require Permissions"))
-            this.requirePermissions = config.getBoolean("Require Permissions");
+        if(config.contains("require-permissions"))
+            this.requirePermissions = config.getBoolean("require-permissions");
 
         usingFloodgate = Bukkit.getPluginManager().getPlugin("floodgate-bukkit") != null;
     }

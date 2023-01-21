@@ -5,9 +5,9 @@
 # Github: https://github.com/LielAmar/LanguageFix
 # =========================================================
 
-Check For Updates: true
+check-for-updates: true
 
-Fixed Commands:
+fixed-commands:
   - "/message %player% %message"
   - "/msg %player% %message%"
   - "/tell %player% %message%"
@@ -16,4 +16,4 @@ Fixed Commands:
   - "/reply %message%"
   - "/r %message%"
 
-Require Permissions: false
+require-permissions: false

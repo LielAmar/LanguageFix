@@ -4,33 +4,31 @@ import com.google.common.io.ByteArrayDataInput;
 import com.google.common.io.ByteArrayDataOutput;
 import com.google.common.io.ByteStreams;
 import com.lielamar.languagefix.bukkit.LanguageFix;
-import com.lielamar.languagefix.shared.modules.ServerVersion;
 import com.lielamar.languagefix.shared.utils.Constants;
+import com.lielamar.lielsutils.bukkit.version.Version;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.messaging.PluginMessageListener;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import javax.annotation.Nonnull;
 import java.io.*;
 
 @SuppressWarnings("UnstableApiUsage")
-public class BungeecordMessageHandler implements Listener, PluginMessageListener {
+public class MessageHandler implements Listener, PluginMessageListener {
 
     private final LanguageFix plugin;
 
     private boolean sentRequest = false;
-    private boolean isBungeecord = false;
+    private boolean isProxy = false;
 
-    public BungeecordMessageHandler(LanguageFix plugin) {
+    public MessageHandler(LanguageFix plugin) {
         this.plugin = plugin;
-    }
 
-    public boolean isBungeecord() {
-        return isBungeecord;
+        this.sentRequest = false;
+        this.isProxy = false;
     }
 
     /**
@@ -42,7 +40,8 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
      */
     @Override
     public void onPluginMessageReceived(String channel, @Nonnull Player player, @Nonnull byte[] message) {
-        if(!channel.equals(Constants.channelName)) return;
+        if(!channel.equals(Constants.channelName))
+            return;
 
         ByteArrayDataInput in = ByteStreams.newDataInput(message);
         String subChannel = in.readUTF();                           // Getting the SubChannel name
@@ -59,9 +58,8 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
                 if(action.equals(Constants.setVersion)) {
                     String value = msgIn.readUTF();
 
-                    if(value.equalsIgnoreCase(Constants.established)) {
-                        isBungeecord = true;
-                    }
+                    if(value.equalsIgnoreCase(Constants.established))
+                        this.isProxy = true;
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -69,29 +67,28 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
         }
     }
 
+
     /**
      * Preparing to send a message to bungeecord if we haven't already, asking to set the server version
      */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if(!sentRequest) {
-            sendBungeecordMessage(event.getPlayer());
-        }
+        if(!sentRequest)
+            this.sendProxyMessage(event.getPlayer());
     }
-
 
     /**
      * Adding delay before actually sending a message to bungeecord
      */
-    public void sendBungeecordMessage(Player player) {
+    public void sendProxyMessage(Player player) {
         // Need some delay because we can't send a message as soon as a player joins
-        Bukkit.getScheduler().runTaskLater(plugin, () -> setBungeecordServerVersion(player), 2L);
+        Bukkit.getScheduler().runTaskLater(plugin, () -> setProxyServerVersion(player), 2L);
     }
 
     /**
      * Sends a message to bungeecord setting the server version
      */
-    private void setBungeecordServerVersion(Player player) {
+    private void setProxyServerVersion(Player player) {
         ByteArrayDataOutput out = ByteStreams.newDataOutput();
 
         out.writeUTF(Constants.subChannelName);            // Setting the SubChannel of the message
@@ -101,7 +98,7 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
         DataOutputStream msgOut = new DataOutputStream(msgBytes);
         try {
             msgOut.writeUTF(Constants.setVersion);           // Setting the action of the message
-            msgOut.writeUTF(ServerVersion.getInstance().getVersion());  // Setting the version of the server
+            msgOut.writeUTF(Version.getInstance().getServerVersion().name());  // Setting the version of the server
         } catch(IOException e) {
             e.printStackTrace();
         }
@@ -114,4 +111,7 @@ public class BungeecordMessageHandler implements Listener, PluginMessageListener
 
         sentRequest = true; // Setting the value to true so we don't send another request
     }
+
+
+    public boolean isProxy() { return this.isProxy;}
 }

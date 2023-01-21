@@ -1,0 +1,38 @@
+### Java ###
+# Compiled class file
+*.class
+
+# classpath
+*.classpath
+
+# project
+*.project
+
+# iml files
+*.iml
+
+# prefs files
+*.prefs
+
+# jar files
+*.jar
+
+# target folder
+target/
+
+# .idea folder
+.idea/
+build/
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# Local fixes file
+fixes.yml
+
+# Ignore Gradle project-specific cache directory
+.gradle
+
+# Ignore Gradle build output directory
+build
+

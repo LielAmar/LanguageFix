@@ -15,11 +15,11 @@ public class OnPlayerConnections implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        plugin.getPlayerHandler().onJoin(event.getPlayer().getUniqueId());
+        this.plugin.getPlayerHandler().onJoin(event.getPlayer().getUniqueId());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
-        plugin.getPlayerHandler().onQuit(event.getPlayer().getUniqueId());
+        this.plugin.getPlayerHandler().onQuit(event.getPlayer().getUniqueId());
     }
 }

@@ -9,7 +9,7 @@ import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import net.md_5.bungee.event.EventPriority;
-import org.geysermc.floodgate.FloodgateAPI;
+import org.geysermc.floodgate.api.FloodgateApi;
 
 public class OnCommandProcess implements Listener {
 
@@ -27,7 +27,7 @@ public class OnCommandProcess implements Listener {
         FixHandler fixHandler = plugin.getFixHandler(player.getServer().getInfo().getName());
 
         // If the player is a bedrock edition player
-        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateAPI.isBedrockPlayer(player.getUniqueId())) return;
+        if(plugin.getConfigHandler().isUsingFloodgate() && FloodgateApi.getInstance().isFloodgatePlayer(player.getUniqueId())) return;
 
         // If the command is not RTL
         if(!fixHandler.isRTLMessage(event.getMessage())) return;
